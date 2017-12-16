@@ -1,0 +1,80 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/02/ALU.hdl
+
+/**
+ * The ALU (Arithmetic Logic Unit).
+ * Computes one of the following functions:
+ * x+y, x-y, y-x, 0, 1, -1, x, y, -x, -y, !x, !y,
+ * x+1, y+1, x-1, y-1, x&y, x|y on two 16-bit inputs,
+ * according to 6 input bits denoted zx,nx,zy,ny,f,no.
+ * In addition, the ALU computes two 1-bit outputs:
+ * if the ALU output == 0, zr is set to 1; otherwise zr is set to 0;
+ * if the ALU output < 0, ng is set to 1; otherwise ng is set to 0.
+ */
+
+// Implementation: the ALU logic manipulates the x and y inputs
+// and operates on the resulting values, as follows:
+// if (zx == 1) set x = 0        // 16-bit constant
+// if (nx == 1) set x = !x       // bitwise not
+// if (zy == 1) set y = 0        // 16-bit constant
+// if (ny == 1) set y = !y       // bitwise not
+// if (f == 1)  set out = x + y  // integer 2's complement addition
+// if (f == 0)  set out = x & y  // bitwise and
+// if (no == 1) set out = !out   // bitwise not
+// if (out == 0) set zr = 1
+// if (out < 0) set ng = 1
+
+// ****************************************
+//
+// The main functions of the ALU are handled via several Mux16 gates with
+// the selection inputs provided by the control bits zx, nx, .. f.
+// Note that use of nx should follow zx, and likewise for ny and zy.
+//
+// For the two status outputs, we can check if a value is negative
+// by simply checking if the MSB is 1.  To check if a 16 bit value
+// f is 0, we need check for 1 in any of the bits.  Thus, we check
+// not(f[0]) and not(f[1]) and .. and not(f[15]), which is
+// not(f[0] or f[1] or .. or f[15]) by DeMorgan's Law.  Since there's no
+// Or16Way gate for this, we need to build one out of two Or8Ways.
+//
+// ****************************************
+
+CHIP ALU {
+    IN
+        x[16], y[16],  // 16-bit inputs
+        zx, // zero the x input?
+        nx, // negate the x input?
+        zy, // zero the y input?
+        ny, // negate the y input?
+        f,  // compute out = x + y (if 1) or x & y (if 0)
+        no; // negate the out output?
+
+    OUT
+        out[16], // 16-bit output
+        zr, // 1 if (out == 0), 0 otherwise
+        ng; // 1 if (out < 0),  0 otherwise
+
+    PARTS:
+
+   Mux16(a = x, b = false, sel = zx, out = x1);
+   Not16(in = x1, out = notx1);
+   Mux16(a = x1, b = notx1, sel = nx, out = x2);
+
+   Mux16(a = y, b = false, sel = zy, out = y1);
+   Not16(in = y1, out = noty1);
+   Mux16(a = y1, b = noty1, sel = ny, out = y2);
+
+   And16(a = x2, b = y2, out = andxy);
+   Add16(a = x2, b = y2, out = addxy);
+
+   Mux16(a = andxy, b = addxy, sel = f, out = f1);
+   Not16(in = f1, out = notf1);
+   Mux16(a = f1, b = notf1, sel = no, out[0..7] = z1, out[8..15] = z2, out[15] = ng, out = out);
+
+   Or8Way(in = z1, out = z3);
+   Or8Way(in = z2, out = z4);
+   Or(a = z3, b = z4, out = z5);
+   Not(in = z5, out = zr);
+}
