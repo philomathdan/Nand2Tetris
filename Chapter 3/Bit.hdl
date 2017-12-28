@@ -1,0 +1,28 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/03/a/Bit.hdl
+
+/**
+ * 1-bit register:
+ * If load[t] == 1 then out[t+1] = in[t]
+ *                 else out does not change (out[t+1] = out[t])
+ */
+
+// ****************************************
+//
+// The functionality is just like Mux, with one option being a feedback
+// loop from the output.  To handle that feedback we need a DFF gate placed
+// directly after the Mux.
+//
+// ****************************************
+
+CHIP Bit {
+    IN in, load;
+    OUT out;
+
+    PARTS:
+
+    Mux(a = w2, b = in, sel = load, out = w1);
+    DFF(in = w1, out = out, out = w2);
+}
