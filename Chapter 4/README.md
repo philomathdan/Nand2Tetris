@@ -2,7 +2,9 @@
 
 Since this isn't the only chapter covering the Hack assembly language, it left me with some questions on a few details.  So, it was a big help to read this [Introduction to Hack Assembly Language](http://www.marksmath.com/tecs/hack-asm/hack-asm.html).  However, I'm still
 unclear on using the symbols R0, ... , R15, and I was unable to find an example of that.  These don't seem to be necessary though, since I can refer to those registers directly.
-
+***
+**Update:** The use of R0, ... , R15 became clearer to me while reading Chapter 6.  As an example, to load the A register with the address of the first register in Memory, we can use @R0.  This is exactly equivalent to @0, and the included assembler and CPU emulator will automatically translate to the latter.  I'm still not sure _why_ one would use @R0 instead of simply @0 though.  
+***
 Writing programs in the Hack assemply language was difficult but also enlightening, as it made me think about control flow differently.  It felt like I was working down "close to the metal."  It's dark and warm down there, and quiet too, save for the soft clinking of 0s and 1s. ;-)
 
 **Multiplication Program (Mult.asm):**
