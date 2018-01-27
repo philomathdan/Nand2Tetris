@@ -2,7 +2,13 @@
 
 After so many chapters of working within the confines of HDL or the Hack assembly language, it's nice to return to "simple" programming in this chapter. :-)  
 
-Above is my assembler, written in Python.  The first challenge for me here was to think about what steps were required to fully process the assembly file, given how it might look to start with.  I decided to pass through the lines of code a total of four times as follows:
+Above is my assembler, written in Python 3.  It's used by entering 
+```
+python3 assembler.py filename.asm 
+```
+which will produce filename.hack.  
+
+The first challenge for me in writing this program was to think about what steps were required to fully process the assembly file, given how it might look to start with.  I decided to pass through the lines of code a total of four times as follows:
 
 1. Remove all comments, spaces, and blank lines (including those that are created after removing comments).
 2. Remove each pseudo-command and add that label and the address of the next line to a dictionary of labels and addresses.
