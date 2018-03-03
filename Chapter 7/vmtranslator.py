@@ -131,13 +131,19 @@ def assembleVMFile(fullFileName):
                 else:
                     assemblyLines += pushAssembly(line[1],line[2],fileName)
 
-            if line[0] == 'pop':
+            elif line[0] == 'pop':
                 if line[1] not in popSegments:
                     print('Unrecognized pop segment:',line[0],'*'+line[1]+'*',line[2])
                 elif not line[2].isdigit():
                     print('Unrecognized pop index:',line[0],line[1],'*'+line[2]+'*')
                 else:
                     assemblyLines += popAssembly(line[1],line[2],fileName)
+
+            else:
+                print('Unknown VM command', ' '.join(line))
+
+        if len(line) not in [1,3]:
+            print('Unrecognized VM command:', ' '.join(line))
 
     return assemblyLines
 
