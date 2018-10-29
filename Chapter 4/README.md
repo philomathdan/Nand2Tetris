@@ -22,7 +22,7 @@ and I provided similar comments within my asm file.
 
 **I/O-Handling Program (Fill.asm):**
 
-This one took me a long time to figure out, and I'm still fully not satisfied with the result.  Recall that SCREEN refers to the address of the first register in screen memory and KBD refers to address of the register holding keyboard input.  Also, KBD occurs immediately after the screen memory, and so it can do double duty as a measure for when we've run past screen memory.  My program uses this fact, which means it will break if screen memory size changes.  I considered using another label for the first register after screen memory, but thought that might make my program more difficult to read.  So, I left this as a comment at the top of my asm file.  As above, the Python version of this program is pretty simple:
+This one took me a long time to figure out, and I'm still not fully satisfied with the result.  Recall that SCREEN refers to the address of the first register in screen memory and KBD refers to address of the register holding keyboard input.  Also, KBD occurs immediately after the screen memory, and so it can do double duty as a measure for when we've run past screen memory.  My program uses this fact, which means it will break if screen memory size changes.  I considered using another label for the first register after screen memory, but thought that might make my program more difficult to read.  So, I left this as a comment at the top of my asm file.  As above, the Python version of this program is pretty simple:
 ```python
 loc = SCREEN  #loc represents location in memory
 while True:
