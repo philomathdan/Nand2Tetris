@@ -15,7 +15,7 @@
   @RESET
   D;JEQ       //  If loc == KBD address, jump to RESET.
   @KBD
-  D = M       //  LoadKBD value in D.
+  D = M       //  Load KBD value in D.
   @BLACK
   D;JGT       //  If KBD value > 0, jump to BLACK.
   @loc
