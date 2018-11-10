@@ -14,13 +14,13 @@ For now, my program only accepts a single .vm file argument.  I've already writt
 
 Below is the assembly code I used for each of the possible VM commands.
 
-Unary operators neg, not:
+**Unary operators - neg, not:**
 ```
 @SP
 A = M-1
 M = -M    // alternatively !M
 ```
-Binary operators add, sub, and, or:
+**Binary operators - add, sub, and, or:**
 ```
 @SP
 AM = M-1
@@ -28,7 +28,7 @@ D = M
 A = A-1
 M = M+D    // alternatively M-D, M&D, M|D
 ```
-(In)equalities:
+**(In)equalities:**
 ```
 @SP
 AM = M-1
@@ -51,7 +51,7 @@ A = M-1
 M = 0
 (ENDfileNameIneqCount)
 ```
-push argument n (alternatively local, this, that):
+**push argument n (alternatively local, this, that):**
 ```
 @ARG    // alternatively LCL, THIS, THAT
 D = M
@@ -64,7 +64,7 @@ M = D
 @SP
 M = M+1
 ```
-push static n:
+**push static n:**
 ```
 @fileName.n    // translated to appropriate string
 D = M
@@ -74,7 +74,7 @@ M = D
 @SP
 M = M+1
 ```
-push constant n:
+**push constant n:**
 ```
 @n
 D = A
@@ -84,7 +84,7 @@ M = D
 @SP
 M = M+1
 ```
-push pointer n (alternatively temp ):
+**push pointer n (alternatively temp ):**
 ```
 @3    // alternatively 5
 D = M
@@ -94,7 +94,7 @@ M = D
 @SP
 M = M+1
 ```
-pop argument n (alternatively local, this, that):
+**pop argument n (alternatively local, this, that):**
 ```
 @ARG    // alternatively LCL, THIS, THAT
 D = M
@@ -111,7 +111,7 @@ M = D
 @SP
 M = M-1
 ```
-pop static n:
+**pop static n:**
 ```
 @SP
 A = M-1
@@ -121,7 +121,7 @@ M = D
 @SP
 M = M-1
 ```
-pop pointer n (alternatively temp):
+**pop pointer n (alternatively temp):**
 ```
 @SP
 A = M-1
