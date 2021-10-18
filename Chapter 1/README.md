@@ -31,8 +31,13 @@ As noted above, Xor(a,b) means "a or b but not both."  That is, we want Or(a,b) 
 ### Mux
 Here, the functionality is: "If sel, then b, and if not sel, then a."  Since the conditional "if X then Y" is equivalent to "(not X) or Y," we can write Mux(a,b) as And(Or(Not(sel),b),Or(sel,a)).
 
+**Edit**:  My friend Dave came up with a formula that looks almost opposite to mine, but turns out to be logically equivalent:  
+Or(And(b,sel),And(a,Not(sel))).
+
 ### DMux
 Here, we have two separate outputs, a and b, each of which takes on either of two values depending on the value of sel.  But this is simply the functionality of a Mux gate, one for output a and one for output b.  In other words, a is given by Mux(in,0,sel) and b is given by Mux(0,in,sel).
+
+**Edit**:  My friend Dave came up with the more elegant solution a = And(in,Not(sel)), b = And(in,sel).
 
 ### Not16, Or16, And16, Mux16
 These are simply parallel versions of the 1-bit gates already constructed, one for each bit in the gate.  They're hardly worth sketching separate diagrams for, but I did so anyway, for completeness I guess. :-) 
