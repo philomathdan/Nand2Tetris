@@ -12,7 +12,7 @@ For the sum, we can take the sum portion of two half adders:  sum(sum(a,b),c).  
 Here, I just added as usual, right to left, inputting each carry bit into the next addition column.  The final carry bit is ignored, per our instructions.
 
 ### Inc16
-Although the authors suggest there is a more efficient construction, I only used an Add16 gate and fed it the values in and 1.
+Initially I just re-used Add16, but with 1 as one of the inputs.  But eventually I noticed that we can be more efficient by using only HalfAdders throughout, as each output bit is only computed with two input bits.
 
 ### ALU
 This is mostly a sequence of Mux16 gates, keeping the order of evaluation as described by the authors.  To evaluate zr, I used DeMorgan's law to evaluate Not(out[0] Or out[1] Or ... Or out[15]).  For ng, we can use the fact that negative numbers have a most significant bit value of 1.
