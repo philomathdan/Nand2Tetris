@@ -1,1 +1,1 @@
-#Chapter 3 Notes and Solutions
+# Chapter 3 Notes and Solutions
